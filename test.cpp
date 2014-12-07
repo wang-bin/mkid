@@ -1,12 +1,11 @@
 #include "mkid.h"
 #include <iostream>
-#include <cmath>
 using namespace std;
 
 int main()
 {
-    cout << mkid32base64_5<'z','z','z','z','z'>::value << endl;
-    cout << mkid32base36_6<'z','z','z','z','z','z'>::value << endl;
-    cout << "forcc: " << mkid_fourcc<'F', 'o', 'C', 'C'>::value << endl;
+    cout << "id32base64 for 'Hello': " << mkid32base64_5<'H','e','l','l','o'>::value << endl;
+    cout << "id32base64 for 'MrWang': " << mkid32base36_6<'M','r','W','a','n','g'>::value << endl;
+    cout << "FourCC for 'HEVC': " << mkid_fourcc<'H','E','V','C'>::value << endl;
     return 0;
 }
