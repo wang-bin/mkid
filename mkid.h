@@ -22,55 +22,60 @@
 
 /*!
  * Example:
- * int id1 = mkid_fourcc<'H', 'E', 'V', 'C'>::value;
- * int id2 = mkid32base64_5<'H', 'e', 'l', 'l', 'o'>::value;
- * int id3 = mkid32base36_6<'M', 'r', 'W', 'a', 'n', 'g'>::value;
+ * int id1 = mkid::fourcc<'H', 'E', 'V', 'C'>::value;
+ * int id2 = mkid::id32base64_5<'H', 'e', 'l', 'l', 'o'>::value;
+ * int id3 = mkid::id32base36_6<'M', 'r', 'W', 'a', 'n', 'g'>::value;
  * For (u)int32 result, base 64 accepts at most 5 characters, while base 36 accepts at most 6 characters.
  */
+namespace mkid {
+namespace detail {
 template<int base, int x> struct map_base;
+} // namespace internal
+
 template<int base, int a0>
-struct mkid32_1 { enum { value = map_base<base, a0>::value};};
+struct id32_1 { enum { value = detail::map_base<base, a0>::value};};
 template<int base, int a0, int a1>
-struct mkid32_2 { enum { value = mkid32_1<base, a0>::value*base + map_base<base, a1>::value};};
+struct id32_2 { enum { value = id32_1<base, a0>::value*base + detail::map_base<base, a1>::value};};
 template<int base, int a0, int a1, int a2>
-struct mkid32_3 { enum { value = mkid32_2<base, a0, a1>::value*base + map_base<base, a2>::value};};
+struct id32_3 { enum { value = id32_2<base, a0, a1>::value*base + detail::map_base<base, a2>::value};};
 template<int base, int a0, int a1, int a2, int a3>
-struct mkid32_4 { enum { value = mkid32_3<base, a0, a1, a2>::value*base + map_base<base, a3>::value};};
+struct id32_4 { enum { value = id32_3<base, a0, a1, a2>::value*base + detail::map_base<base, a3>::value};};
 template<int base, int a0, int a1, int a2, int a3, int a4>
-struct mkid32_5 { enum { value = mkid32_4<base, a0, a1, a2, a3>::value*base + map_base<base, a4>::value};};
+struct id32_5 { enum { value = id32_4<base, a0, a1, a2, a3>::value*base + detail::map_base<base, a4>::value};};
 template<int base, int a0, int a1, int a2, int a3, int a4, int a5>
-struct mkid32_6 { enum { value = mkid32_5<base, a0, a1, a2, a3, a4>::value*base + map_base<base, a5>::value};};
+struct id32_6 { enum { value = id32_5<base, a0, a1, a2, a3, a4>::value*base + detail::map_base<base, a5>::value};};
 
 // template based FourCC
 template<int a0, int a1, int a2, int a3>
-struct mkid_fourcc : public mkid32_4<128, a0, a1, a2, a3>{};
+struct fourcc : public id32_4<128, a0, a1, a2, a3>{};
 
 // a0~a4: '0'~'9', 'A'~'Z', 'a'~'z', '_', '.' ==>> [0,63]
 template<int a0>
-struct mkid32base64_1 : public mkid32_1<64, a0>{};
+struct id32base64_1 : public id32_1<64, a0>{};
 template<int a0, int a1>
-struct mkid32base64_2 : public mkid32_2<64, a0, a1>{};
+struct id32base64_2 : public id32_2<64, a0, a1>{};
 template<int a0, int a1, int a2>
-struct mkid32base64_3 : public mkid32_3<64, a0, a1, a2>{};
+struct id32base64_3 : public id32_3<64, a0, a1, a2>{};
 template<int a0, int a1, int a2, int a3>
-struct mkid32base64_4 : public mkid32_4<64, a0, a1, a2, a3>{};
+struct id32base64_4 : public id32_4<64, a0, a1, a2, a3>{};
 template<int a0, int a1, int a2, int a3, int a4>
-struct mkid32base64_5 : public mkid32_5<64, a0, a1, a2, a3, a4>{};
+struct id32base64_5 : public id32_5<64, a0, a1, a2, a3, a4>{};
 
 // a0~a5: '0'~'9', 'A'~'Z', 'a'~'z' ==>> [0,63], upper and lower letters are equal
 template<int a0>
-struct mkid32base36_1 : public mkid32_1<36, a0>{};
+struct id32base36_1 : public id32_1<36, a0>{};
 template<int a0, int a1>
-struct mkid32base36_2 : public mkid32_2<36, a0, a1>{};
+struct id32base36_2 : public id32_2<36, a0, a1>{};
 template<int a0, int a1, int a2>
-struct mkid32base36_3 : public mkid32_3<36, a0, a1, a2>{};
+struct id32base36_3 : public id32_3<36, a0, a1, a2>{};
 template<int a0, int a1, int a2, int a3>
-struct mkid32base36_4 : public mkid32_4<36, a0, a1, a2, a3>{};
+struct id32base36_4 : public id32_4<36, a0, a1, a2, a3>{};
 template<int a0, int a1, int a2, int a3, int a4>
-struct mkid32base36_5 : public mkid32_5<36, a0, a1, a2, a3, a4>{};
+struct id32base36_5 : public id32_5<36, a0, a1, a2, a3, a4>{};
 template<int a0, int a1, int a2, int a3, int a4, int a5>
-struct mkid32base36_6 : public mkid32_6<36, a0, a1, a2, a3, a4, a5>{};
+struct id32base36_6 : public id32_6<36, a0, a1, a2, a3, a4, a5>{};
 
+namespace detail {
 ////////////////////////////Details////////////////////////////
 template<bool b, typename T1, typename T2> struct if_then_else;
 template<typename T1, typename T2> struct if_then_else<true, T1, T2> { typedef T1 Type;};
@@ -127,4 +132,6 @@ template<int x> struct map_base<128, x> {
         map_identical_t>::Type>::Type>::value
     };
 };
+} // namespace detail
+} // namespace mkid
 #endif // MKID_H
