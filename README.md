@@ -19,7 +19,7 @@ Given an integer `q`, any integer can be uniquely expressed as `x=a0+a1*q+a2*q^2
 
 ### Thereom 2
 
-Let K(q) be the max value let polynomial expression be a 32 bit integer, then `K(128)<=3` (FourCC), `K(64)<=4` (id32base64_n, n<=5) and `K(36)<=5` (id32base36_n, n<=6).
+Let K(q) be the max value let polynomial expression be a 32 bit integer, then `K(256)<=3` (FourCC), `K(64)<=4` (id32base64_n, n<=5) and `K(36)<=5` (id32base36_n, n<=6).
 
 ### Proof
 

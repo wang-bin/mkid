@@ -47,7 +47,7 @@ struct id32_6 { enum { value = id32_5<base, a0, a1, a2, a3, a4>::value*base + de
 
 // template based FourCC
 template<int a0, int a1, int a2, int a3>
-struct fourcc : public id32_4<128, a0, a1, a2, a3>{};
+struct fourcc : public id32_4<256, a0, a1, a2, a3>{};
 
 // a0~a4: '0'~'9', 'A'~'Z', 'a'~'z', '_', '.' ==>> [0,63]
 template<int a0>
@@ -124,11 +124,11 @@ template<int> struct out_of_upper_bound {};
 struct map_identical_t;
 template<int x, typename T> struct map_identical_helper;
 template<int x> struct map_identical_helper<x,map_identical_t>{enum{value=x};};
-template<int x> struct map_base<128, x> {
+template<int x> struct map_base<256, x> {
     enum {
         value = map_identical_helper<x,
         typename if_then_else<(x<0), out_of_lower_bound<0>,
-        typename if_then_else<(x>127), out_of_upper_bound<127>,
+        typename if_then_else<(x>255), out_of_upper_bound<255>,
         map_identical_t>::Type>::Type>::value
     };
 };
